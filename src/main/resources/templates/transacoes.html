@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <title>Análise Transações</title>
+</head>
+<body>
+<div class="container">
+  <div class="mb-5">
+    <p align="center" class="h1 mt-5 mb-3">Importar Transações</p>
+  </div>
+
+  <form action="transacoes/salvar" enctype="multipart/form-data"  method="post">
+    <div class="form-group">
+      <div class="input-group mb-3">
+        <input name="file" accept=".csv" type="file" class="form-control" id="inputGroupFile01">
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Importar</button>
+    </div>
+  </form>
+  <div class="mt-3 mb-5">
+    <div th:if="${param.mensagemSucesso}" th:text="${param.mensagemSucesso}"class="alert alert-success" role="alert"></div>
+    <div th:if="${param.mensagem}" th:text="${param.mensagem}" class="alert alert-danger" role="alert"></div>
+  </div>
+  <hr>
+  <div class="p-3 mt-2">
+    <p align="center" class="h1">Importações Realizadas</p>
+    <table class="table table-striped">
+      <thead>
+      <tr align="center">
+        <th scope="col">DATA TRANSAÇÕES</th>
+        <th scope="col">DATA IMPORTAÇÕES</th>
+      </tr>
+      </thead>
+      <tbody class="table-group-divider">
+      <tr align="center" th:each="datas : ${listImportacoesDto}">
+        <td  th:text="${#temporals.format(datas.dataTransacao, 'dd/MM/yyyy')}"></td>
+        <td  th:text="${#temporals.format(datas.dataImportacao, 'dd/MM/yyyy - HH:mm:ss')}">
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+</body>
+</html>
