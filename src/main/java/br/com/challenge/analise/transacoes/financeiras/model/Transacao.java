@@ -24,6 +24,8 @@ public class Transacao {
     private String contaDestino;
     private BigDecimal valorTransacao;
     private LocalDateTime dataTransacao;
-    private LocalDateTime dataImportacao;
+
+    @ManyToOne
+    private InfoImportacao infoImportacao;
 
 }

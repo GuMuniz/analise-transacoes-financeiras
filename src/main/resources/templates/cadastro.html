@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="~{base :: head}"></head>
+<body>
+<div th:replace="~{base :: navbar}"></div>
+<div class="container">
+    <p align="center" class="h1 mt-5 mb-5">CADASTRO USUÁRIO</p>
+    <form th:object="${novoUsuarioDto}" th:action="@{/cadastro}" method="post">
+        <div class="form-group">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome:</label>
+                <input th:field="*{nome}" th:errorclass="is-invalid" id="nome" class="form-control" placeholder="Nome">
+                <div class="invalid-feedback" th:errors="*{nome}">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input th:field="*{email}" th:errorclass="is-invalid" id="email" class="form-control"  placeholder="name@example.com">
+                <div class="invalid-feedback" th:errors="*{email}">
+                </div>
+            </div>
+        </div>
+        <div th:if="${param.error}" th:text="${param.error}" class="alert alert-danger" role="alert"></div>
+        <div>
+            <input onclick="loading()" class="btn btn-primary mt-2" type="submit" value="Cadastrar"/>
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="~{base :: head}"></head>
+<body>
+<div th:replace="~{base :: navbar}"></div>
+<div class="container">
+    <p class="h1 mt-5 mb-5" align="center">ANÁLISE DE TRANSAÇÕES SUSPEITAS</p>
+    <form th:href="@{analise}" method="post">
+        <div class="form-group mb-3">
+            <input  class="form-control" type="month" name="data"/>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Realizar análise</button>
+        </div>
+    </form>
+
+    <div th:if="${listTransacaoSuspeita}" class="p-3 mt-2">
+        <p align="center" class="h1">TRANSAÇÕES SUSPEITAS</p>
+        <table class="table table-striped table-bordered">
+            <thead class="table-light">
+            <tr align="center">
+
+                <th colspan="3" scope="col">ORIGEM</th>
+                <th colspan="3" scope="col">DESTINO</th>
+                <th rowspan="2" scope="col">VALOR</th>
+            </tr>
+            <tr>
+                <th scope="col">BANCO</th>
+                <th scope="col" >AGENCIA</th>
+                <th scope="col" >CONTA</th>
+                <th scope="col">BANCO</th>
+                <th scope="col" >AGENCIA</th>
+                <th scope="col" >CONTA</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr align="center" th:each="transacao : ${listTransacaoSuspeita}">
+                <td  th:text="${transacao.bancoOrigem}"></td>
+                <td  th:text="${transacao.agenciaOrigem}"></td>
+                <td  th:text="${transacao.contaOrigem}"></td>
+                <td  th:text="${transacao.bancoDestino}"></td>
+                <td  th:text="${transacao.agenciaDestino}"></td>
+                <td  th:text="${transacao.contaDestino}"></td>
+                <td  th:text="${'R$' + #numbers.formatDecimal(transacao.valorTransacao,3,'POINT',2,'COMMA')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

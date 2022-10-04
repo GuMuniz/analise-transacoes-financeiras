@@ -1,7 +1,9 @@
 package br.com.challenge.analise.transacoes.financeiras.controller;
 
+import br.com.challenge.analise.transacoes.financeiras.service.InfoImportacaoService;
 import br.com.challenge.analise.transacoes.financeiras.service.TransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +19,12 @@ public class TransacaoController {
     @Autowired
     private TransacaoService transacaoService;
 
+    @Autowired
+    private InfoImportacaoService importacaoService;
     @GetMapping
     public ModelAndView transacoes(){
         ModelAndView model = new ModelAndView("transacoes");
-        model.addObject("listImportacoesDto", transacaoService.getImportacoesRealizadasDto());
+        model.addObject("infoImportacao", importacaoService.buscarTodas());
         return model;
     }
 
@@ -30,13 +34,14 @@ public class TransacaoController {
         if(file.getContentType().equals("text/csv")){
             String mensagem = transacaoService.salvarTransacoes(file);
             if(mensagem == null){
-                model.addObject("mensagemSucesso", "Transações salvas com sucesso !!");
+                model.addObject("mensagem", "Transações salvas com sucesso !!");
                 return model;
             }
-            model.addObject("mensagem", mensagem);
+            model.addObject("error", mensagem);
             return model;
         }
-        model.addObject("mensagem", "formato do arquivo inválido");
+        model.addObject("error", "formato do arquivo inválido");
         return model;
     }
+
 }
